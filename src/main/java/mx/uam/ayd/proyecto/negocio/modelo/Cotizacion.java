@@ -25,7 +25,7 @@ public class Cotizacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCotizacion;
 
-    //private String descripcionFallas;
+    private String diagnosticoInicial;
     private String manoObra;
     private float manoObraCosto;
     private float refaccionesCosto;
@@ -58,15 +58,15 @@ public class Cotizacion {
 		this.idCotizacion = idCotizacion;
 	}
 
-   /* 
-    public String getDescripcionFallas() {
-		return descripcionFallas;
+   
+    public String getdiagnosticoInicial() {
+		return diagnosticoInicial;
 	}
 
-	public void setDescripcionFallas(String descripcionFallas) {
-		this.descripcionFallas = descripcionFallas;
+	public void setdiagnosticoInicial(String diagnosticoInicial) {
+		this.diagnosticoInicial = diagnosticoInicial;
 	}
-     */
+     
 
 	public String getManoObra() {
 		return manoObra;
@@ -131,7 +131,7 @@ public class Cotizacion {
 	
 	@Override
 	public String toString() {
-		return "Cotizacion [idCotizacion=" + idCotizacion + ", costo de mano de obra=" + manoObraCosto + 
+		return "Cotizacion [idCotizacion=" + idCotizacion + ", diagnostico inicial=" + diagnosticoInicial + ", costo de mano de obra=" + manoObraCosto + 
 		", costo de refacciones=" + refaccionesCosto + 
         ", costo total=" + costoTotal + ", estado de aprobacion=" + estadoAprobacion + "]";
 	}

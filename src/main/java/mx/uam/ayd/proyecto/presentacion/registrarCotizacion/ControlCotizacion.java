@@ -117,7 +117,7 @@ public class ControlCotizacion {
     }
 
 
-    public void onGuardarClick(String fallas, Vehiculo vehiculoSeleccionado) {
+    public void onGuardarClick(String diagnostico, Vehiculo vehiculoSeleccionado) {
         try {
             // Asegurar la mano de obra en el borrador de cotización
             boolean manoObraRegistrada = servicioCotizacion.capturarDatosServicio(this.costoManoObra);
@@ -127,10 +127,10 @@ public class ControlCotizacion {
             }
 
             // Crear la Reparación con sus fallas
-            servicioReparacion.crearNuevaReparacionConFallas(fallas, vehiculoSeleccionado);
+        //   servicioReparacion.crearNuevaReparacionConFallas(fallas, vehiculoSeleccionado);
 
             // 3. Finalizar la cotización
-            boolean exitoCotizacion = servicioCotizacion.finalizarCotizacion();
+            boolean exitoCotizacion = servicioCotizacion.finalizarCotizacion(diagnostico);
             
             if (exitoCotizacion) {
                 vista.mostrarMensajeExito();

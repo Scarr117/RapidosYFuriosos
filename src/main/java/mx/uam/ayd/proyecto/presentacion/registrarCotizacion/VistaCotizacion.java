@@ -303,10 +303,10 @@ public class VistaCotizacion {
     @FXML
     public void accionGuardarCotizacion() {
         Vehiculo vehiculoSeleccionado = comboVehiculos.getValue();
-        String fallas = txtFallas.getText();
+        String diagnostico = txtFallas.getText();
         String costoTxt = txtCostoManoObra.getText();
 
-        if (vehiculoSeleccionado == null || fallas == null || fallas.trim().isEmpty() ||
+        if (vehiculoSeleccionado == null || diagnostico == null || diagnostico.trim().isEmpty() ||
         costoTxt == null || costoTxt.trim().isEmpty()) {
         
         mostrarMensajeError("¡Atención! Debes seleccionar el vehiculo, llenar las fallas y el costo de mano de obra antes de guardar.");
@@ -325,6 +325,6 @@ public class VistaCotizacion {
         }
 
         // 3. Procesar el guardado si las validaciones pasaron
-        control.onGuardarClick(fallas, vehiculoSeleccionado);
+        control.onGuardarClick(diagnostico, vehiculoSeleccionado);
     }
 }

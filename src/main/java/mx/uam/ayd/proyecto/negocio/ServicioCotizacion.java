@@ -91,7 +91,7 @@ public class ServicioCotizacion {
     }
 
 
-    public boolean finalizarCotizacion() {
+    public boolean finalizarCotizacion(String diagnosticoInicial) {
     // Verificamos que el borrador exista
     if (this.cotizacion == null) {
         return false;
@@ -110,6 +110,9 @@ public class ServicioCotizacion {
 
     // Asignamos el total final a la entidad
     this.cotizacion.setCostoTotal(totalFinal);
+
+    //Asignamos el diagnostico inicial
+    this.cotizacion.setdiagnosticoInicial(diagnosticoInicial);
 
     //Guardae cotizacion
     cotizacionRepository.save(this.cotizacion); 

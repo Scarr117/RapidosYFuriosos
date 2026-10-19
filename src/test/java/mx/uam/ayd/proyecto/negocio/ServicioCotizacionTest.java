@@ -105,7 +105,7 @@ class ServicioCotizacionTest {
     @Test
     @DisplayName("No debería finalizar la cotización si no hay un borrador activo")
     void testFinalizarCotizacionSinBorrador() {
-        boolean resultado = servicioCotizacion.finalizarCotizacion();
+        boolean resultado = servicioCotizacion.finalizarCotizacion("Diagnóstico de prueba para el test");
         assertFalse(resultado, "Debe retornar false si intenta finalizar sin haber creado el borrador");
     }
 
@@ -118,7 +118,7 @@ class ServicioCotizacionTest {
         // Capturamos el servicio solo con el flotante
         servicioCotizacion.capturarDatosServicio(500.0f); // Mano de obra = $500
         
-        boolean resultado = servicioCotizacion.finalizarCotizacion();
+        boolean resultado = servicioCotizacion.finalizarCotizacion("Diagnóstico de prueba para el test");
         assertTrue(resultado, "Debe retornar true al finalizar exitosamente");
         
         ArgumentCaptor<Cotizacion> captor = ArgumentCaptor.forClass(Cotizacion.class);
