@@ -142,4 +142,11 @@ public class VentanaPrincipal {
         }
     }
     // FIN Modificación Erik HU-34
+
+    @FXML 
+    private void handleRegistrarReparacion() {
+        if (control != null) {
+            control.registrarReparacion();
+        }
+    }
 }

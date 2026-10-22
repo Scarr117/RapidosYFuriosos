@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="750.0" prefWidth="650.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <!-- Título de la Ventana -->
+    <Label text="Generar Reparación">
+        <font>
+            <Font name="System Bold" size="20.0" />
+        </font>
+    </Label>
+
+    <Separator prefWidth="200.0" />
+
+    <!-- SECCIÓN 1: Selección de Cotización Aprobada -->
+    <VBox spacing="10.0">
+        <Label text="1. Seleccionar Cotización Aprobada" textFill="#555555">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+        
+        <TableView fx:id="tablaCotizaciones" prefHeight="150.0" prefWidth="600.0">
+          <columns>
+            <TableColumn fx:id="colIdCotizacion" prefWidth="80.0" text="Folio" />
+            <TableColumn fx:id="colNombreCliente" prefWidth="250.0" text="Cliente" />
+            <TableColumn fx:id="colModeloVehiculo" prefWidth="200.0" text="Vehículo" />
+          </columns>
+        </TableView>
+    </VBox>
+
+    <Separator prefWidth="200.0" />
+
+    <!-- SECCIÓN 2: Información Detallada (Solo lectura) -->
+    <VBox spacing="10.0">
+        <Label text="2. Información Detallada" textFill="#555555">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+        
+        <GridPane hgap="15.0" vgap="10.0">
+            <!-- Columna 1: Cliente -->
+            <Label text="Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblNombre" text="..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            
+            <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblTelefono" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            
+            <!-- Columna 2: Vehículo -->
+            <Label text="Marca:" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblMarca" text="..." GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            
+            <Label text="Modelo:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblModelo" text="..." GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            
+            <Label text="Año:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblAnio" text="..." GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            
+            <Label text="Placas:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label fx:id="lblPlacas" text="..." GridPane.columnIndex="3" GridPane.rowIndex="3" />
+        </GridPane>
+
+        <!-- Diagnóstico Inicial -->
+        <Label text="Diagnóstico Inicial de la Cotización:">
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <TextArea fx:id="txtDiagnostico" prefHeight="60.0" wrapText="true" editable="false" style="-fx-control-inner-background: #f4f4f4;" />
+    </VBox>
+
+    <Separator prefWidth="200.0" />
+
+    <!-- SECCIÓN 3: Ingreso de Datos de Reparación -->
+    <VBox spacing="10.0">
+        <Label text="3. Completar Reparación" textFill="#555555">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+        
+        <Label text="Fallas detectadas / Trabajos a realizar:" />
+        <TextArea fx:id="txtFallas" prefHeight="70.0" wrapText="true" promptText="Describa a detalle las fallas..." />
+        
+        <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <Label text="Meses de Garantía:" />
+            <TextField fx:id="txtMesesGarantia" prefWidth="100.0" promptText="Ej. 6" />
+        </HBox>
+    </VBox>
+
+    <Separator prefWidth="200.0" />
+
+    <!-- Botón Guardar -->
+    <HBox alignment="CENTER_RIGHT">
+        <Button fx:id="btnGuardarReparacion" onAction="#accionGuardarReparacion" text="Guardar Reparación" prefWidth="200.0" prefHeight="40.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+    </HBox>
+
+</VBox>

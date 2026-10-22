@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import mx.uam.ayd.proyecto.datos.CotizacionRepository;
+import mx.uam.ayd.proyecto.datos.CotizacionRepository.CotizacionAprobadaDTO;
 import mx.uam.ayd.proyecto.negocio.modelo.Cita;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.CotizacionConcepto;
@@ -122,6 +123,22 @@ public class ServicioCotizacion {
     
     return true;
 }
+
+//HU-06 Recuperamos la cotizacion para generar la reparacion
+    public Cotizacion obtenerCotizacionporID(Long idCotizacion){
+        Cotizacion cotizacion = cotizacionRepository.findCotizacionConDetalles(idCotizacion);
+        
+        if (cotizacion == null) {
+            throw new IllegalArgumentException("La cotización no existe");
+        }
+        
+        return cotizacion;
+
+    }
+    
+    public List<CotizacionAprobadaDTO> obtenerCotizacionesAprobadas(){
+       return cotizacionRepository.findCotizacionesAprobadas(); 
+    }
 
 
 }

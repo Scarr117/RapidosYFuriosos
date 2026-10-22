@@ -204,6 +204,20 @@ public class Reparacion {
     }
 
     /**
+     * @return la cotizacion asociada a esta reparacion
+     */
+    public Cotizacion getCotizacion() {
+        return cotizacion;
+    }
+
+    /**
+     * @param cotizacion la cotizacion a asociar
+     */
+    public void setCotizacion(Cotizacion cotizacion) {
+        this.cotizacion = cotizacion;
+    }
+
+    /**
      * Obtiene el historial de notificaciones de atraso
      * @return historialNotificaciones
      */

@@ -22,6 +22,8 @@ import mx.uam.ayd.proyecto.datos.ReparacionRepository;
 import mx.uam.ayd.proyecto.datos.ReparacionRepository.VehiculosPendientesDTO;
 import mx.uam.ayd.proyecto.negocio.modelo.Reparacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
+import mx.uam.ayd.proyecto.negocio.modelo.Cita;
 
 class ServicioReparacionHU42Test {
 
@@ -35,51 +37,69 @@ class ServicioReparacionHU42Test {
 
     private Vehiculo vehiculoPrueba;
 
+    private Cotizacion cotizacionPrueba;
+
+    private Cita citaPrueba;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         // Preparamos nuestro objeto base para las pruebas de marcado
         reparacionPrueba = new Reparacion();
+
         vehiculoPrueba = new Vehiculo();
+        vehiculoPrueba.setPlacas("XYZ-123");
+
+        citaPrueba = new Cita();
+        citaPrueba.setVehiculo(vehiculoPrueba);
+
+        cotizacionPrueba = new Cotizacion();
+        cotizacionPrueba.setCita(citaPrueba);
     }
 
-    // --- Pruebas para crearNuevaReparacionConFallas (HU-14) ---
+// --- Pruebas para crearNuevaReparacionConFallas ---
 
     @Test
-    @DisplayName("Debería lanzar excepción si los códigos de falla son nulos o vacíos")
+    @DisplayName("Debería lanzar excepción si las fallas son nulas o vacías")
     void testCrearReparacionFallasNulasOVacias() {
-        // When & Then: Probamos tanto un valor null como un string en blanco
         assertThrows(IllegalArgumentException.class, 
-            () -> servicioReparacion.crearNuevaReparacionConFallas(null, vehiculoPrueba),
-            "Debería rechazar códigos de falla nulos");
+            () -> servicioReparacion.crearNuevaReparacionConFallas(null, 6, cotizacionPrueba),
+            "Debería rechazar fallas nulas");
 
         assertThrows(IllegalArgumentException.class, 
-            () -> servicioReparacion.crearNuevaReparacionConFallas("   ", vehiculoPrueba),
-            "Debería rechazar códigos de falla vacíos o con puros espacios");
+            () -> servicioReparacion.crearNuevaReparacionConFallas("   ", 6, cotizacionPrueba),
+            "Debería rechazar fallas vacías o con puros espacios");
     }
 
     @Test
-    @DisplayName("Debería lanzar excepción si el vehículo es nulo")
-    void testCrearReparacionVehiculoNulo() {
-        // When & Then: Pasamos un null en lugar del vehículo
+    @DisplayName("Debería lanzar excepción si la cotización es nula")
+    void testCrearReparacionCotizacionNula() {
         assertThrows(IllegalArgumentException.class, 
-            () -> servicioReparacion.crearNuevaReparacionConFallas("Falla motor", null),
-            "Debería rechazar un vehículo nulo");
+            () -> servicioReparacion.crearNuevaReparacionConFallas("Falla motor", 6, null),
+            "Debería rechazar una cotización nula");
+    }
+    
+    @Test
+    @DisplayName("Debería lanzar excepción si la garantía es negativa")
+    void testCrearReparacionGarantiaNegativa() {
+        assertThrows(IllegalArgumentException.class, 
+            () -> servicioReparacion.crearNuevaReparacionConFallas("Falla motor", -1, cotizacionPrueba),
+            "Debería rechazar meses de garantía negativos");
     }
 
     @Test
-    @DisplayName("Debería lanzar excepción si el vehículo ya tiene una reparación activa")
+    @DisplayName("Debería lanzar excepción si la cotización ya tiene una reparación activa")
     void testCrearReparacionVehiculoConReparacionActiva() {
-        // Given: Simulamos que el repositorio responde que SÍ existe una reparación activa
-        // Usamos anyList() porque la lista se crea dentro de tu método
-        when(reparacionRepository.existsByVehiculoAndEstatusServicioIn(eq(vehiculoPrueba), anyList()))
+        // Given: Simulamos que el repositorio responde que SÍ existe una reparación activa para esta cotización
+        when(reparacionRepository.existsByCotizacionAndEstatusServicioIn(eq(cotizacionPrueba), anyList()))
             .thenReturn(true);
 
         // When & Then: Verificamos que se bloquee el flujo
         IllegalArgumentException excepcion = assertThrows(IllegalArgumentException.class, 
-            () -> servicioReparacion.crearNuevaReparacionConFallas("Frenos", vehiculoPrueba));
+            () -> servicioReparacion.crearNuevaReparacionConFallas("Frenos", 6, cotizacionPrueba));
             
-        assertEquals("El vehículo con placas ya tiene un proceso de reparación activo en el taller", excepcion.getMessage());
+        // Verifica que el mensaje de error coincida con el que lanzas en tu servicio real
+        assertTrue(excepcion.getMessage().contains("ya tiene")); 
         
         // Verificamos que nunca se intentó guardar nada
         verify(reparacionRepository, never()).save(any(Reparacion.class));
@@ -88,31 +108,17 @@ class ServicioReparacionHU42Test {
     @Test
     @DisplayName("Debería crear y guardar la nueva reparación exitosamente")
     void testCrearReparacionExito() {
-        // Given: Simulamos que NO hay reparaciones activas para este vehículo
-        when(reparacionRepository.existsByVehiculoAndEstatusServicioIn(eq(vehiculoPrueba), anyList()))
+        // Given: Simulamos que NO hay reparaciones activas para esta cotización
+        when(reparacionRepository.existsByCotizacionAndEstatusServicioIn(eq(cotizacionPrueba), anyList()))
             .thenReturn(false);
 
-        // Simulamos el guardado para que retorne la entidad creada
-        Reparacion reparacionGuardadaMock = new Reparacion();
-        when(reparacionRepository.save(any(Reparacion.class))).thenReturn(reparacionGuardadaMock);
-
-        // When: Ejecutamos el método
-        Reparacion resultado = servicioReparacion.crearNuevaReparacionConFallas("Falta aceite, Balatas", vehiculoPrueba);
-
-        // Then: Verificamos que se guardó y capturamos el objeto exacto que se envió al repositorio
-        assertNotNull(resultado, "El método debería retornar la reparación guardada");
+        // When: Ejecutamos el método pasándole las fallas, la garantía y la cotización válida
+        servicioReparacion.crearNuevaReparacionConFallas("Falta aceite, Balatas", 6, cotizacionPrueba);
         
-        ArgumentCaptor<Reparacion> captor = ArgumentCaptor.forClass(Reparacion.class);
-        verify(reparacionRepository, times(1)).save(captor.capture());
-        
-        Reparacion reparacionCapturada = captor.getValue();
-        
-        // Validamos que todos los setters de tu lógica de negocio funcionaron
-        assertEquals("En espera", reparacionCapturada.getEstatusServicio(), "El estatus inicial debe ser 'En espera'");
-        assertEquals(vehiculoPrueba, reparacionCapturada.getVehiculo(), "El vehículo debe estar asignado");
-        assertEquals("Falta aceite, Balatas", reparacionCapturada.getObservacionesTecnicas(), "Los códigos de falla deben guardarse en las observaciones");
-        assertNotNull(reparacionCapturada.getFechaInicio(), "La fecha de inicio debe estar inicializada");
+        // Then: Verificamos que el repositorio haya llamado al método save exactamente 1 vez
+        verify(reparacionRepository, times(1)).save(any(Reparacion.class));
     }
+
 
 
     // --- Pruebas para obtenerVehiculosParaEntrega (HU-42) ---

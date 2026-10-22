@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import mx.uam.ayd.proyecto.presentacion.listarInventario.ControlInventario;
 import mx.uam.ayd.proyecto.presentacion.registrarPieza.ControlRegistrarPieza;
+import mx.uam.ayd.proyecto.presentacion.registrarReparacion.ControlReparacion;
 import mx.uam.ayd.proyecto.presentacion.consultarDistribuidores.ControlConsultarDistribuidores;
 import mx.uam.ayd.proyecto.presentacion.consultarEntregas.ControlVehiculosEntrega;
 import mx.uam.ayd.proyecto.presentacion.registrarServicio.ControlRegistrarServicio;
@@ -17,6 +18,7 @@ import mx.uam.ayd.proyecto.presentacion.registrarCita.ControlRegistrarCita;
 // INICIO Modificación realizada por Erik para la HU-34 (Notificación de Atraso)
 import mx.uam.ayd.proyecto.presentacion.informeAtrasos.ControlInformeAtrasos;
 // FIN Modificación Erik HU-34
+import mx.uam.ayd.proyecto.presentacion.registrarReparacion.ControlReparacion;
 
 /**
  * Esta clase lleva el flujo de control de la ventana principal
@@ -39,6 +41,8 @@ public class ControlPrincipal {
     // INICIO Modificación realizada por Erik para la HU-34
     private final ControlInformeAtrasos controlInformeAtrasos;
     // FIN Modificación Erik HU-34
+    //HU-06 Reparacion
+    private final ControlReparacion controlReparacion; 
 
 
     @Autowired
@@ -54,6 +58,7 @@ public class ControlPrincipal {
             // INICIO Modificación realizada por Erik para la HU-34
             ControlInformeAtrasos controlInformeAtrasos,
             // FIN Modificación Erik HU-34
+            ControlReparacion controlReparacion,
             VentanaPrincipal ventana) {
         this.controlRegistrarPieza = controlRegistrarPieza;
         this.controlConsultarDistribuidores = controlConsultarDistribuidores;
@@ -67,6 +72,7 @@ public class ControlPrincipal {
         // INICIO Modificación realizada por Erik para la HU-34
         this.controlInformeAtrasos = controlInformeAtrasos;
         // FIN Modificación Erik HU-34
+        this.controlReparacion = controlReparacion;
     }
     
     /**
@@ -149,4 +155,7 @@ public class ControlPrincipal {
         controlInformeAtrasos.inicia();
     }
     // FIN Modificación Erik HU-34
+    public void registrarReparacion() {
+        controlReparacion.inicia();
+    }
 }

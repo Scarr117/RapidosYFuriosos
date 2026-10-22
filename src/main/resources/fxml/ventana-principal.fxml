@@ -25,6 +25,9 @@
             <!-- NUEVO BOTÓN PARA EL INVENTARIO (HU-12) -->
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRegistarCotizacion" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-padding: 12px; -fx-font-size: 14px;" text="Registrar Cotización" />
 
+            <!-- NUEVO BOTÓN PARA LA REPARACION (HU-06) SPRINT 1 -->
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRegistrarReparacion" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-padding: 12px; -fx-font-size: 14px;" text="Registrar Reparacion" />
+
             <!-- NUEVO BOTÓN PARA LISTA VEHICULOS ENTREGA (HU-42) -->
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVehiculosEntrega" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-padding: 12px; -fx-font-size: 14px;" text="Vehículos por Entregar" />
 

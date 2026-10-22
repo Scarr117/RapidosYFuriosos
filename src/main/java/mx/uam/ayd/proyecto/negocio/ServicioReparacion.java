@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import mx.uam.ayd.proyecto.datos.ReparacionRepository;
 import mx.uam.ayd.proyecto.datos.ReparacionRepository.VehiculosPendientesDTO;
 import mx.uam.ayd.proyecto.negocio.modelo.Reparacion;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,38 +48,40 @@ public class ServicioReparacion {
 
 
     /*
-    HU-14 Crear Reparacion con su fallas O
+    HU-06 Crear Reparacion con su fallas O
     @author Oscar Hinojosa
     */
     @Transactional
-    public Reparacion crearNuevaReparacionConFallas(String codigosFalla, Vehiculo vehiculo) {
+    public Reparacion crearNuevaReparacionConFallas(String codigosFalla, int mesesGarantia, Cotizacion cotizacion) {
         
         if (codigosFalla == null || codigosFalla.trim().isEmpty()) {
             throw new IllegalArgumentException("Debe ingresar los códigos de falla detectados.");
         }
-        if (vehiculo == null) {
-            throw new IllegalArgumentException("Debe seleccionar un vehículo.");
+        if (cotizacion == null) {
+            throw new IllegalArgumentException("Debe seleccionar una cotizacion.");
         }
 
         // Definimos los estatus que se consideran "Reparación Cerrada/Finalizada"
         List<String> estatusFinalizados = List.of("Entregado", "En espera", "Listo paara entrega");
 
         // Validamos si el carro ya tiene un proceso activo en el taller
-        boolean tieneReparacionActiva = reparacionRepository.existsByVehiculoAndEstatusServicioIn(vehiculo, estatusFinalizados);
+        boolean tieneReparacionActiva = reparacionRepository.existsByCotizacionAndEstatusServicioIn(cotizacion, estatusFinalizados);
 
         if (tieneReparacionActiva) {
-            throw new IllegalArgumentException("El vehículo con placas ya tiene un proceso de reparación activo en el taller");
+            throw new IllegalArgumentException("La cotizacion ya tiene un proceso de reparación activo en el taller");
         }
 
         // Crear la nueva entidad Reparacion
         Reparacion nuevaReparacion = new Reparacion();
         nuevaReparacion.setEstatusServicio("En espera");
-        nuevaReparacion.setVehiculo(vehiculo);
+        nuevaReparacion.setCotizacion(cotizacion);
         nuevaReparacion.setFechaInicio(LocalDateTime.now());
         
 
         // Guardar las fallas directamente en las observaciones técnicas
         nuevaReparacion.setObservacionesTecnicas(codigosFalla);
+
+        nuevaReparacion.setGarantiaMeses(mesesGarantia);
 
         // Guardar en la base de datos
         return reparacionRepository.save(nuevaReparacion);

@@ -46,7 +46,8 @@ public class Cotizacion {
     private List<CotizacionConcepto> conceptos = new ArrayList<>();
 
     public Cotizacion(){ 
-		this.estadoAprobacion = "Pendiente"; 
+		//Toda Cotizacion va a tener el estado de aprobada cuando se genere
+		this.estadoAprobacion = "Aprobada"; 
     }
     
  

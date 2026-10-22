@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Reparacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
-
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import java.util.List;
 
 /**
@@ -56,9 +56,9 @@ public interface ReparacionRepository extends CrudRepository<Reparacion, Integer
     List<Reparacion> findReparacionesParaAtraso();
     // FIN Modificación Erik HU-34
 
-    // Busca si existe alguna reparación activa para un vehículo que NO esté 'Entregado' ni 'Terminado'
-    //Oscar Hinojosa HU-14
-    boolean existsByVehiculoAndEstatusServicioIn(Vehiculo vehiculo, List<String> estatusFinalizados);
+    // Busca si existe alguna reparación activa para una cotizacion que NO esté 'Entregado' ni 'Terminado'
+    //Oscar Hinojosa HU-06
+    boolean existsByCotizacionAndEstatusServicioIn(Cotizacion cotizacion, List<String> estatusFinalizados);
 
 
 }
