@@ -76,6 +76,7 @@ public class ServicioReparacion {
         nuevaReparacion.setEstatusServicio("En espera");
         nuevaReparacion.setCotizacion(cotizacion);
         nuevaReparacion.setFechaInicio(LocalDateTime.now());
+        nuevaReparacion.setVehiculo(cotizacion.getCita().getVehiculo());
         
 
         // Guardar las fallas directamente en las observaciones técnicas
