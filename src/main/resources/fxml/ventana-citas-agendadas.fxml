@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="550.0" prefWidth="880.0" spacing="15.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+   </padding>
+   <children>
+      <!-- Título principal -->
+      <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Citas Agendadas" />
+
+      <!-- Barra de búsqueda (funciona con Enter o botón Buscar) -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <TextField fx:id="txtBuscarCliente" onAction="#handleBuscar" promptText="Buscar por cliente..." style="-fx-padding: 7px;" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtBuscarPlacas" onAction="#handleBuscar" promptText="Buscar por placas..." style="-fx-padding: 7px;" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtBuscarTelefono" onAction="#handleBuscar" promptText="Buscar por teléfono..." style="-fx-padding: 7px;" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#handleBuscar" style="-fx-background-color: #0078D7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-background-radius: 5px;" text="Buscar" />
+         </children>
+      </HBox>
+
+      <!-- Pestañas de navegación e indicador de fecha/semana -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <Button fx:id="btnCitasHoy" mnemonicParsing="false" onAction="#handleCitasHoy" text="Citas de hoy" />
+            <Button fx:id="btnCitasSemana" mnemonicParsing="false" onAction="#handleCitasSemanales" text="Citas de la semana" />
+            <Button fx:id="btnTodasCitas" mnemonicParsing="false" onAction="#handleTodasLasCitas" text="Todas las citas" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblInfoFecha" style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" text="" />
+         </children>
+      </HBox>
+
+      <!-- Tabla de citas -->
+      <TableView fx:id="tablaCitas" style="-fx-selection-bar: #0078D7; -fx-selection-bar-non-focused: #3498db;" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+            <TableColumn fx:id="colFecha" prefWidth="135.0" text="Fecha" />
+            <TableColumn fx:id="colHora" prefWidth="95.0" style="-fx-font-weight: bold;" text="Hora" />
+            <TableColumn fx:id="colCliente" prefWidth="160.0" text="Cliente" />
+            <TableColumn fx:id="colTelefono" prefWidth="130.0" text="Teléfono" />
+            <TableColumn fx:id="colVehiculo" prefWidth="185.0" text="Vehículo (Marca / Mod.)" />
+            <TableColumn fx:id="colPlacas" prefWidth="95.0" style="-fx-font-weight: bold;" text="Placas" />
+         </columns>
+         <placeholder>
+            <Label text="No se encontraron citas agendadas." />
+         </placeholder>
+      </TableView>
+
+      <!-- Botones inferiores -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #2c3e50; -fx-padding: 7px 15px;" text="Editar Cita" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #fdedec; -fx-border-color: #f5b7b1; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-padding: 7px 15px;" text="Cancelar Cita" />
+            <Button mnemonicParsing="false" onAction="#handleCerrar" style="-fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-padding: 7px 15px;" text="Cerrar" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

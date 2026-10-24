@@ -149,4 +149,11 @@ public class VentanaPrincipal {
             control.registrarReparacion();
         }
     }
+
+    @FXML
+    private void handleCitasAgendadas() {
+        if (control != null) {
+            control.citasAgendadas();
+        }
+    }
 }

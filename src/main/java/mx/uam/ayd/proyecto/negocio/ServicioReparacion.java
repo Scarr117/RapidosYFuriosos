@@ -60,6 +60,9 @@ public class ServicioReparacion {
         if (cotizacion == null) {
             throw new IllegalArgumentException("Debe seleccionar una cotizacion.");
         }
+        if (mesesGarantia < 0) {
+            throw new IllegalArgumentException("Los meses de garantía no pueden ser negativos.");
+        }
 
         // Definimos los estatus que se consideran "Reparación Cerrada/Finalizada"
         List<String> estatusFinalizados = List.of("Entregado", "En espera", "Listo paara entrega");

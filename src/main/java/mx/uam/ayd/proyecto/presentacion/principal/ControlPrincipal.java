@@ -19,6 +19,7 @@ import mx.uam.ayd.proyecto.presentacion.registrarCita.ControlRegistrarCita;
 import mx.uam.ayd.proyecto.presentacion.informeAtrasos.ControlInformeAtrasos;
 // FIN Modificación Erik HU-34
 import mx.uam.ayd.proyecto.presentacion.registrarReparacion.ControlReparacion;
+import mx.uam.ayd.proyecto.presentacion.citasAgendadas.ControlCitasAgendadas;
 
 /**
  * Esta clase lleva el flujo de control de la ventana principal
@@ -43,6 +44,7 @@ public class ControlPrincipal {
     // FIN Modificación Erik HU-34
     //HU-06 Reparacion
     private final ControlReparacion controlReparacion; 
+    private final ControlCitasAgendadas controlCitasAgendadas;
 
 
     @Autowired
@@ -59,6 +61,7 @@ public class ControlPrincipal {
             ControlInformeAtrasos controlInformeAtrasos,
             // FIN Modificación Erik HU-34
             ControlReparacion controlReparacion,
+            ControlCitasAgendadas controlCitasAgendadas,
             VentanaPrincipal ventana) {
         this.controlRegistrarPieza = controlRegistrarPieza;
         this.controlConsultarDistribuidores = controlConsultarDistribuidores;
@@ -73,6 +76,7 @@ public class ControlPrincipal {
         this.controlInformeAtrasos = controlInformeAtrasos;
         // FIN Modificación Erik HU-34
         this.controlReparacion = controlReparacion;
+        this.controlCitasAgendadas = controlCitasAgendadas;
     }
     
     /**
@@ -157,5 +161,12 @@ public class ControlPrincipal {
     // FIN Modificación Erik HU-34
     public void registrarReparacion() {
         controlReparacion.inicia();
+    }
+
+    /**
+     * Método que arranca la historia de usuario "Citas agendadas" (HU-01)
+     */
+    public void citasAgendadas() {
+        controlCitasAgendadas.inicia();
     }
 }

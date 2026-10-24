@@ -10,8 +10,16 @@ import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
 
 public interface CitaRepository extends CrudRepository<Cita, Long> {
     
+    public List<Cita> findAll();
+
     // Devuelve una lista por si el cliente tiene historial de múltiples citas
     public List<Cita> findByClienteNombre(String nombre);
+
+    public List<Cita> findByClienteNombreContainingIgnoreCase(String nombre);
+
+    public List<Cita> findByVehiculoPlacasContainingIgnoreCase(String placas);
+
+    public List<Cita> findByClienteTelefonoContaining(String telefono);
 
     public List<Cita> findByFecha(LocalDate fecha);
 

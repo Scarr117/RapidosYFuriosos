@@ -112,3 +112,33 @@ VALUES (
     (SELECT id_refaccion FROM REFACCION WHERE nombre = 'Balatas delanteras'),
     (SELECT id_reparacion FROM REPARACION WHERE id_vehiculo = (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'XYZ-789'))
 );
+
+-- ==========================================
+-- Citas agendadas de prueba (HU-01)
+-- ==========================================
+INSERT INTO CITA (fecha, hora, estado, id_cliente, vehiculo_id)
+VALUES (
+    CURRENT_DATE,
+    '09:00:00',
+    'Pendiente',
+    (SELECT id_cliente FROM CLIENTE WHERE nombre = 'Juan Pérez'),
+    (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'ABC-123')
+);
+
+INSERT INTO CITA (fecha, hora, estado, id_cliente, vehiculo_id)
+VALUES (
+    CURRENT_DATE,
+    '10:30:00',
+    'Pendiente',
+    (SELECT id_cliente FROM CLIENTE WHERE nombre = 'María López'),
+    (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'XYZ-789')
+);
+
+INSERT INTO CITA (fecha, hora, estado, id_cliente, vehiculo_id)
+VALUES (
+    DATEADD('DAY', 7, CURRENT_DATE),
+    '14:00:00',
+    'Pendiente',
+    (SELECT id_cliente FROM CLIENTE WHERE nombre = 'Carlos Slim'),
+    (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'AWX-789')
+);
