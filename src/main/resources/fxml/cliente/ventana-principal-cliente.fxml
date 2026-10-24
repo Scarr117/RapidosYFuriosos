@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="350.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+    <padding>
+        <Insets top="40.0" />
+    </padding>
+
+    <children>
+        <Label text="Panel de Cliente">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+    </children>
+</VBox>

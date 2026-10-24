@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="30.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
+    <children>
+        <Label text="Taller Rápidos y Furiosos">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Button mnemonicParsing="false" onAction="#ingresarComoMecanico" prefHeight="50.0" prefWidth="250.0" text="Ingresar como Mecánico" />
+        <Button mnemonicParsing="false" onAction="#ingresarComoCliente" prefHeight="50.0" prefWidth="250.0" text="Ingresar como Cliente" />
+    </children>
+</VBox>
