@@ -41,9 +41,11 @@ public class ControlPrincipal {
     private final ControlRegistrarCita controlRegistrarCita;
     private final ControlInformeAtrasos controlInformeAtrasos;
     //HU-06 Reparacion 
+    private final ControlReparacion controlReparacion;
+    
+    //HU-01 Citas Agendadas
     private final ControlCitasAgendadas controlCitasAgendadas;
 
-    private final ControlReparacion controlReparacion;
     //HU-04
     @Lazy
     @Autowired
