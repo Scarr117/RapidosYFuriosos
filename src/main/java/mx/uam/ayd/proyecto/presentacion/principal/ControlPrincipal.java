@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import javafx.fxml.FXML;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy; // <-- IMPORT NUEVO
 import org.springframework.stereotype.Component;
 
 import mx.uam.ayd.proyecto.presentacion.listarInventario.ControlInventario;
@@ -15,11 +16,10 @@ import mx.uam.ayd.proyecto.presentacion.registrarServicio.ControlRegistrarServic
 import mx.uam.ayd.proyecto.presentacion.pedidos.ControladorPedidos;
 import mx.uam.ayd.proyecto.presentacion.registrarCotizacion.ControlCotizacion;
 import mx.uam.ayd.proyecto.presentacion.registrarCita.ControlRegistrarCita;
-// INICIO Modificación realizada por Erik para la HU-34 (Notificación de Atraso)
 import mx.uam.ayd.proyecto.presentacion.informeAtrasos.ControlInformeAtrasos;
-// FIN Modificación Erik HU-34
 import mx.uam.ayd.proyecto.presentacion.registrarReparacion.ControlReparacion;
 import mx.uam.ayd.proyecto.presentacion.citasAgendadas.ControlCitasAgendadas;
+import mx.uam.ayd.proyecto.presentacion.inicio.ControlSelectorRol;
 
 /**
  * Esta clase lleva el flujo de control de la ventana principal
@@ -39,13 +39,15 @@ public class ControlPrincipal {
     private final ControlVehiculosEntrega controlVehiculoEntrega;
     private final ControlCotizacion controlCotizacion;
     private final ControlRegistrarCita controlRegistrarCita;
-    // INICIO Modificación realizada por Erik para la HU-34
     private final ControlInformeAtrasos controlInformeAtrasos;
-    // FIN Modificación Erik HU-34
-    //HU-06 Reparacion
-    private final ControlReparacion controlReparacion; 
+    //HU-06 Reparacion 
     private final ControlCitasAgendadas controlCitasAgendadas;
 
+    private final ControlReparacion controlReparacion;
+    //HU-04
+    @Lazy
+    @Autowired
+    private ControlSelectorRol controlSelectorRol;
 
     @Autowired
     public ControlPrincipal(
@@ -57,9 +59,7 @@ public class ControlPrincipal {
             ControlVehiculosEntrega controlVehiculosEntrega,
             ControlCotizacion controlCotizacion,
             ControlRegistrarCita controlRegistrarCita,
-            // INICIO Modificación realizada por Erik para la HU-34
             ControlInformeAtrasos controlInformeAtrasos,
-            // FIN Modificación Erik HU-34
             ControlReparacion controlReparacion,
             ControlCitasAgendadas controlCitasAgendadas,
             VentanaPrincipal ventana) {
@@ -72,9 +72,7 @@ public class ControlPrincipal {
         this.controlVehiculoEntrega = controlVehiculosEntrega;
         this.controlCotizacion = controlCotizacion;
         this.controlRegistrarCita = controlRegistrarCita;
-        // INICIO Modificación realizada por Erik para la HU-34
         this.controlInformeAtrasos = controlInformeAtrasos;
-        // FIN Modificación Erik HU-34
         this.controlReparacion = controlReparacion;
         this.controlCitasAgendadas = controlCitasAgendadas;
     }
@@ -150,15 +148,20 @@ public class ControlPrincipal {
     public void registrarCita() {
         controlRegistrarCita.inicia();
     }
-
-    // INICIO Modificación realizada por Erik para la HU-34
     /**
      * Método que arranca la historia de usuario "Notificación de Atrasos" (HU-34)
      */
     public void informeAtrasos() {
         controlInformeAtrasos.inicia();
     }
-    // FIN Modificación Erik HU-34
+
+    // --- NUEVO MÉTODO PARA CERRAR LA VENTANA ---
+    /**
+     * Este método será llamado por la ventana cuando se presione la cruz roja
+     */
+    public void regresarASelector() {
+        controlSelectorRol.inicia();
+    }
     public void registrarReparacion() {
         controlReparacion.inicia();
     }

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * Ventana principal usando JavaFX con FXML
- * 
+ *
  */
 @Component
 public class VentanaPrincipal {
@@ -27,7 +27,7 @@ public class VentanaPrincipal {
     public VentanaPrincipal() {
         // Don't initialize JavaFX components in constructor
     }
-    
+
     /**
      * Initialize UI components on the JavaFX application thread
      */
@@ -35,49 +35,57 @@ public class VentanaPrincipal {
         if (initialized) {
             return;
         }
-        
+
         // Create UI only if we're on JavaFX thread
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(this::initializeUI);
             return;
         }
-        
+
         try {
             stage = new Stage();
             stage.setTitle("Mi Aplicación");
-            
+
             // Load FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ventana-principal.fxml"));
             loader.setController(this);
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
-            
+
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                stage.close();
+                if (control != null) {
+                    control.regresarASelector(); // Volver al selector de perfiles
+                }
+            });
+
             initialized = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void setControlPrincipal(ControlPrincipal control) {
         this.control = control;
     }
     /**
      * Muestra la ventana y establece el control
-     * 
+     *
      * @param control El controlador asociado a esta ventana
      */
     public void muestra() {
         //this.control = control;
-        
+
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> this.muestra());
             return;
         }
-        
+
         initializeUI();
         stage.show();
     }
-    
+
     // FXML Event Handlers
 
     @FXML
@@ -110,7 +118,7 @@ public class VentanaPrincipal {
     @FXML
     private void abrirVentanaPedidos() {
         // Le dice al control principal que es hora de abrir la HU-30
-        control.iniciaVentanaPedidos(); 
+        control.iniciaVentanaPedidos();
     }
 
     @FXML
@@ -133,7 +141,7 @@ public class VentanaPrincipal {
             control.registrarCita();
         }
     }
-    
+
     // INICIO Modificación realizada por Erik para la HU-34
     @FXML
     private void handleInformeAtrasos() {
