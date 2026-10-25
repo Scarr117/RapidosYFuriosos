@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.1.2</version>
+            <version>11.2.1</version>
         </dependency>
         
         <!-- Spring Boot -->
@@ -111,6 +111,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <jvmArguments>
+                        --add-opens javafx.base/com.sun.javafx.event=ALL-UNNAMED
+                    </jvmArguments>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -125,6 +128,10 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>mx.uam.ayd.proyecto.ProyectoApplication</mainClass>
+                    <options>
+                        <option>--add-opens</option>
+                        <option>javafx.base/com.sun.javafx.event=ALL-UNNAMED</option>
+                    </options>
                 </configuration>
             </plugin>
             <plugin>

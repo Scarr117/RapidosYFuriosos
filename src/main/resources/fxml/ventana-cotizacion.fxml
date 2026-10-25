@@ -5,15 +5,15 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="700.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="700.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -32,11 +32,11 @@
         <Label text="1. Datos del Cliente y Vehículo" textFill="#555555">
             <font><Font name="System Bold" size="14.0" /></font>
         </Label>
-        <HBox spacing="15.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
             <Label text="Cliente:" />
             <ComboBox fx:id="comboClientes" prefWidth="200.0" promptText="Seleccione un cliente..." />
         </HBox>
-        <HBox spacing="15.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
             <Label text="Vehículo:" />
             <ComboBox fx:id="comboVehiculos" prefWidth="200.0" promptText="Seleccione un vehículo..." />
         </HBox>
@@ -50,11 +50,11 @@
             <font><Font name="System Bold" size="14.0" /></font>
         </Label>
         
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
             <TextField fx:id="txtBuscarPieza" prefWidth="250.0" promptText="ID de la pieza" />
             <Button fx:id="btnBuscarPieza" onAction="#accionBuscarRefaccion" text="Buscar" />
         </HBox>
-        <TableView fx:id="tablaRefacciones" prefHeight="200.0" prefWidth="400.0">
+        <TableView fx:id="tablaRefacciones" prefHeight="250.0" prefWidth="400.0">
           <columns>
             <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
             <TableColumn fx:id="colNombre" prefWidth="200.0" text="Nombre" />
@@ -63,15 +63,15 @@
           </columns>
         </TableView>
 
-        <HBox spacing="15.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
              <!-- Botón para restar -->
-            <Button text=" - " onAction="#accionBotonMenos" />
+            <Button onAction="#accionBotonMenos" text=" - " />
     
              <!-- Etiqueta que muestra el número (empieza en 0) -->
-            <Label fx:id="lblContador" text="0" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label fx:id="lblContador" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="0" />
     
             <!-- Botón para sumar -->
-             <Button text=" + " onAction="#accionBotonMas" />
+             <Button onAction="#accionBotonMas" text=" + " />
     
             <!-- Botón para confirmar y mandar a la tabla -->
             <Button fx:id="btnAgregarRefaccion" onAction="#accionAgregarRefaccion" text="Agregar a Cotización" />
@@ -90,7 +90,7 @@
         <TextArea fx:id="txtFallas" prefHeight="60.0" wrapText="true" />
         
         
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
             <Label text="Costo Mano de Obra: $" />
             <TextField fx:id="txtCostoManoObra" prefWidth="100.0" promptText="0.00" />
         </HBox>
@@ -99,20 +99,24 @@
     <Separator prefWidth="200.0" />
 
     <!-- SECCIÓN 4: Totales y Guardado -->
-    <VBox spacing="5.0" alignment="CENTER_RIGHT">
-        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+    <VBox alignment="CENTER_RIGHT" spacing="5.0">
+
+        <!-- VBOX para las refacciones agregadas-->
+        <VBox fx:id="refaccionesAgregadas" spacing="5.0" />
+
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
             <Label text="Subtotal:" />
             <Label fx:id="lblSubtotal" text=" 0.00">
                 <font><Font name="System Bold" size="12.0" /></font>
             </Label>
         </HBox>
-        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
             <Label text="IVA (16%):" />
             <Label fx:id="lblIva" text=" 0.00">
                 <font><Font name="System Bold" size="12.0" /></font>
             </Label>
         </HBox>
-        <HBox spacing="10.0" alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
             <Label text="Total:" textFill="#cc0000">
                 <font><Font name="System Bold" size="16.0" /></font>
             </Label>
@@ -121,7 +125,7 @@
             </Label>
         </HBox>
         
-        <Button fx:id="btnGuardarCotizacion" onAction="#accionGuardarCotizacion" text="Guardar Cotización" prefWidth="200.0" prefHeight="40.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;">
+        <Button fx:id="btnGuardarCotizacion" onAction="#accionGuardarCotizacion" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Guardar Cotización">
             <VBox.margin>
                 <Insets top="10.0" />
             </VBox.margin>

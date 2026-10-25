@@ -85,11 +85,19 @@ public class ControlCotizacion {
         return calcularSubtotal() + calcularIva();
     }
 
+    public void recalcularTotalesRefacciones(Refaccion seleccionada, int cantidad) {
+        float subtotal = calcularSubtotal();
+        float iva = calcularIva();
+        float total = calcularTotal();
+        vista.actualizarEtiquetasTotales(subtotal, iva, total);
+        vista.actualizarRefaccionesAgregadas(seleccionada.getNombre(), seleccionada.getPrecio(), cantidad, seleccionada.getIdRefaccion());
+    }
+
     public void recalcularTotales() {
         float subtotal = calcularSubtotal();
         float iva = calcularIva();
         float total = calcularTotal();
-        vista.actualizarEtiquetasTotales(subtotal, iva, total); 
+        vista.actualizarEtiquetasTotales(subtotal, iva, total);
     }
 
     public void onAgregarRefaccion(Refaccion seleccionada, int cantidad) {
@@ -99,7 +107,7 @@ public class ControlCotizacion {
                 float costoDeEstaPieza = seleccionada.getPrecio() * cantidad;
                 this.totalRefacciones = this.totalRefacciones + costoDeEstaPieza;
 
-                recalcularTotales();
+                recalcularTotalesRefacciones(seleccionada, cantidad);
 
             } 
         }else {

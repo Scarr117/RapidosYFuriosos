@@ -5,11 +5,18 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.CotizacionConcepto;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
@@ -25,7 +32,6 @@ import java.util.List;
 @Component
 public class VistaCotizacion {
 
-    
     @FXML private ComboBox<Cliente> comboClientes;
     @FXML private ComboBox<Vehiculo> comboVehiculos;
     
@@ -52,12 +58,23 @@ public class VistaCotizacion {
     @FXML private Label lblIva;
     @FXML private Label lblTotal;
     @FXML private Button btnGuardarCotizacion;
+    @FXML private VBox refaccionesAgregadas;
 
     private int cantidadEscogida = 0;
     private Map<Integer, Integer> piezasYaAgregadas = new HashMap<>();
     private Refaccion refaccionActual;
     private ControlCotizacion control;
     private Stage stage;
+
+    // Helper class to store references to a specific row's components
+    private static class refaccionItem {
+        Label lblNombre;
+        Label lblPrecio;
+        int cantidad;
+        float precioUnitario;
+    }
+
+    private Map<Integer, refaccionItem> refaccionesYaAgregadas = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -208,6 +225,49 @@ public class VistaCotizacion {
         lblTotal.setText("$ " + String.format("%.2f", total));
     }
 
+    public void actualizarRefaccionesAgregadas(String nombreRefaccion, float precioRefaccion, int cantidadAgregada, int refaccionId){
+        if (refaccionesYaAgregadas.containsKey(refaccionId)) {
+            refaccionItem refaccionAgregada = refaccionesYaAgregadas.get(refaccionId);
+            refaccionAgregada.cantidad += cantidadAgregada;
+
+            float precioTotal = refaccionAgregada.cantidad * refaccionAgregada.precioUnitario;
+
+            String precioFormato = String.join("", String.valueOf(refaccionAgregada.cantidad),"x   ", String.format("$%.2f", precioTotal));
+            refaccionAgregada.lblPrecio.setText(precioFormato);
+            
+        } else {
+            // Crear el HBOX (fila)
+            HBox itemFila = new HBox();
+            itemFila.setAlignment(Pos.CENTER_LEFT);
+            itemFila.setSpacing(10.0);
+
+            // Nombre de la refaccion
+            Label lblNombre = new Label(nombreRefaccion);
+
+            // Espacio
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
+            // Precio de la refaccion
+            float precioTotal = precioRefaccion * cantidadAgregada;
+            String precioFormato = String.join("", String.valueOf(cantidadAgregada),"x   ", String.format("$%.2f", precioTotal));
+            Label lblPrecio = new Label(precioFormato);
+
+            // Añadir a la ventana
+            itemFila.getChildren().addAll(lblNombre, spacer, lblPrecio);
+            refaccionesAgregadas.getChildren().add(itemFila);
+
+            // Guardamos en el HashMap
+            refaccionItem nuevaRefaccion = new refaccionItem();
+            nuevaRefaccion.lblPrecio = lblPrecio;
+            nuevaRefaccion.lblNombre = lblNombre;
+            nuevaRefaccion.cantidad = cantidadAgregada;
+            nuevaRefaccion.precioUnitario = precioRefaccion;
+
+            refaccionesYaAgregadas.put(refaccionId, nuevaRefaccion);
+        }
+    }
+
     public void mostrarMensajeExito() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Éxito");
@@ -237,7 +297,7 @@ public class VistaCotizacion {
     public void accionBuscarRefaccion() {
         String textoIngresado = txtBuscarPieza.getText();
     
-    // Validar que no esté vacío
+        // Validar que no esté vacío
         if (textoIngresado == null || textoIngresado.trim().isEmpty()) {
             return; 
         }

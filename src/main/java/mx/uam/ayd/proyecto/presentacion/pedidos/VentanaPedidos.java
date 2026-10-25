@@ -19,10 +19,10 @@ public class VentanaPedidos {
     public void muestra(ControladorPedidos controlador) {
         try {
             // 1. Cargar el diseño FXML
-            FXMLLoader loader = new FXMLLoader();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/VentanaPedidos.fxml"));
             
             // ¡OJO AQUÍ! Debes poner la ruta exacta donde guardaste tu archivo FXML
-            loader.setLocation(getClass().getResource("/fxml/VentanaPedidos.fxml"));
+            //loader.setLocation(getClass().getResource("/fxml/VentanaPedidos.fxml"));
             
             // 2. Le decimos al FXML que use tu controlador de Spring
             loader.setController(controlador);
