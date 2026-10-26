@@ -76,9 +76,15 @@ INSERT INTO REPARACION (
     'Garantía directa con proveedor en el caso de los amortiguadores.',
     (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'XYZ-789')
   );
+
+INSERT INTO REPARACION (fecha_inicio, estatus_servicio, observaciones_tecnicas, garantia_meses, condiciones_garantia, id_vehiculo)
+VALUES ('2026-10-20 10:00:00', 'En reparación', 'Cambio de banda de distribución y revisión de suspensión.', 0, NULL,
+        (SELECT id_vehiculo FROM VEHICULO WHERE placas = 'AWX-789'));
 -- ==========================================
 -- Pedidos de prueba (HU-30)
 -- ==========================================
+
+
 
 -- 1. Pedido asociado a una reparación específica (Para el Nissan Versa)
 INSERT INTO PEDIDO (fecha_pedido, estado_pedido, cantidad, id_distribuidor, id_refaccion, id_reparacion)

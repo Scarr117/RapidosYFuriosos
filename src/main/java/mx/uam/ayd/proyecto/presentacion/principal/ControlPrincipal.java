@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy; // <-- IMPORT NUEVO
 import org.springframework.stereotype.Component;
-
+import mx.uam.ayd.proyecto.presentacion.consultarReparaciones.ControlConsultarReparaciones;
 import mx.uam.ayd.proyecto.presentacion.listarInventario.ControlInventario;
 import mx.uam.ayd.proyecto.presentacion.registrarPieza.ControlRegistrarPieza;
 import mx.uam.ayd.proyecto.presentacion.registrarReparacion.ControlReparacion;
@@ -30,6 +30,7 @@ import mx.uam.ayd.proyecto.presentacion.inicio.ControlSelectorRol;
 @Component
 public class ControlPrincipal {
 
+    private final ControlConsultarReparaciones controlConsultarReparaciones;
     private final ControlRegistrarPieza controlRegistrarPieza;
     private final ControlConsultarDistribuidores controlConsultarDistribuidores;
     private final ControlRegistrarServicio controlRegistrarServicio;
@@ -53,6 +54,7 @@ public class ControlPrincipal {
 
     @Autowired
     public ControlPrincipal(
+            ControlConsultarReparaciones controlConsultarReparaciones,
             ControlRegistrarPieza controlRegistrarPieza,
             ControlConsultarDistribuidores controlConsultarDistribuidores,
             ControlRegistrarServicio controlRegistrarServicio,
@@ -65,6 +67,7 @@ public class ControlPrincipal {
             ControlReparacion controlReparacion,
             ControlCitasAgendadas controlCitasAgendadas,
             VentanaPrincipal ventana) {
+        this.controlConsultarReparaciones = controlConsultarReparaciones;
         this.controlRegistrarPieza = controlRegistrarPieza;
         this.controlConsultarDistribuidores = controlConsultarDistribuidores;
         this.controlRegistrarServicio = controlRegistrarServicio;
@@ -173,5 +176,9 @@ public class ControlPrincipal {
      */
     public void citasAgendadas() {
         controlCitasAgendadas.inicia();
+    }
+
+    public void consultarReparaciones() {
+        controlConsultarReparaciones.inicia();
     }
 }

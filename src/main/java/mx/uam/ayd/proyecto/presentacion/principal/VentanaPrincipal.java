@@ -89,6 +89,13 @@ public class VentanaPrincipal {
     // FXML Event Handlers
 
     @FXML
+    private void handleConsultarReparaciones() {
+        if (control != null) {
+            control.consultarReparaciones();
+        }
+    }
+
+    @FXML
     private void handleConsultarInventario() {
         if (control != null) {
             control.consultarInventario();

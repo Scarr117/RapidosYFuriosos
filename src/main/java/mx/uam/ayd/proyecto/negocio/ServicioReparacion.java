@@ -10,7 +10,7 @@ import mx.uam.ayd.proyecto.negocio.modelo.Reparacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
 import org.springframework.transaction.annotation.Transactional;
-
+import mx.uam.ayd.proyecto.negocio.modelo.EstadoReparacion;
 import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -186,4 +186,11 @@ public class ServicioReparacion {
         return reparacionRepository.findReparacionesParaAtraso();
     }
     // FIN Modificación Erik HU-34
+
+
+    // INICIO Modificación realizada por Irving HU-14
+    public List<Reparacion> obtenerReparaciones() {
+        return reparacionRepository.findEnTallerConVehiculo(EstadoReparacion.estatusEnTaller());
+    }
+    // FIN Modificación Irving HU-14
 }

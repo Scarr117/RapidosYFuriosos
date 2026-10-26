@@ -3,6 +3,7 @@ package mx.uam.ayd.proyecto.datos;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Reparacion;
+import org.springframework.data.repository.query.Param;
 import mx.uam.ayd.proyecto.negocio.modelo.Vehiculo;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import java.util.List;
@@ -26,6 +27,10 @@ public interface ReparacionRepository extends CrudRepository<Reparacion, Integer
         String getPlacas();
         String getEstatusServicio();
     }
+    // INICIO Modificación realizada por Irving para la HU-14 (Consultar reparaciones)
+    @Query("SELECT r FROM Reparacion r JOIN FETCH r.vehiculo WHERE r.estatusServicio IN :estatus ORDER BY r.fechaInicio")
+    List<Reparacion> findEnTallerConVehiculo(@Param("estatus") List<String> estatus);
+    // FIN Modificación Irving HU-14
     
     /*
     Metodo para hacer JOIN de las tres entidades

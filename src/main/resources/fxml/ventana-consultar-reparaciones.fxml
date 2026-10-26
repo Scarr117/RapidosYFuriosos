@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" style="-fx-padding: 10px;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Label text="Reparaciones en el taller" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <!-- Mensaje que reemplaza a las listas cuando el taller está libre -->
+    <Label fx:id="labelMensaje" visible="false" managed="false" wrapText="true"
+           style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-padding: 20px 0 20px 0;" />
+
+    <!-- Listas por estado + información de la reparación seleccionada -->
+    <VBox fx:id="contenedorListas" spacing="8" VBox.vgrow="ALWAYS">
+
+        <Label fx:id="labelEnCurso" style="-fx-font-weight: bold;" />
+        <TableView fx:id="tableEnCurso" prefHeight="110.0" VBox.vgrow="ALWAYS" />
+
+        <Label fx:id="labelEnEspera" style="-fx-font-weight: bold;" />
+        <TableView fx:id="tableEnEspera" prefHeight="110.0" VBox.vgrow="ALWAYS" />
+
+        <Label fx:id="labelListo" style="-fx-font-weight: bold;" />
+        <TableView fx:id="tableListo" prefHeight="110.0" VBox.vgrow="ALWAYS" />
+
+        <Label text="Información de la reparación" style="-fx-font-weight: bold;" />
+        <TextArea fx:id="textAreaDetalle" editable="false" wrapText="true" prefRowCount="7" />
+    </VBox>
+
+    <HBox spacing="10" style="-fx-padding: 5px 0 0 0;">
+        <Button onAction="#handleActualizar" style="-fx-min-width: 100px; -fx-min-height: 25px;" text="Actualizar" />
+        <Button onAction="#handleCerrar" style="-fx-min-width: 80px; -fx-min-height: 25px;" text="Cerrar" />
+    </HBox>
+
+</VBox>
